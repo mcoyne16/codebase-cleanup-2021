@@ -2,6 +2,17 @@ import os
 from datetime import datetime
 from pandas import read_csv
 
+def format_usd(my_price):
+    """
+    Formats a number as USD with $ and two decimals, and thousands separator
+
+    Params my_price is a number (int or float) that we want to formation
+
+    Examples: format_usd(10)
+    """
+    return f"${my_price:,.2f}"
+
+
 # READ INVENTORY OF PRODUCTS
 
 products_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "products.csv")
