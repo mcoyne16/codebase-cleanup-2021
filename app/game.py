@@ -5,9 +5,11 @@ from random import choice
 # USER SELECTION
 #
 
+Valid_Options = ["rock", "paper", "scissors"]
+
 u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
 print("USER CHOICE:", u)
-if u not in ["rock", "paper", "scissors"]:
+if u not in Valid_Options:
     print("OOPS, TRY AGAIN")
     exit()
 
@@ -15,30 +17,18 @@ if u not in ["rock", "paper", "scissors"]:
 # COMPUTER SELECTION
 #
 
-c = choice(["rock", "paper", "scissors"])
+c = choice(Valid_Options)
 print("COMPUTER CHOICE:", c)
 
 #
 # DETERMINATION OF WINNER
 #
 
-if u == "rock" and c == "rock":
-    print("It's a tie!")
-elif u == "rock" and c == "paper":
-    print("The computer wins")
-elif u == "rock" and c == "scissors":
-    print("The user wins")
-
-elif u == "paper" and c == "rock":
-    print("The computer wins")
-elif u == "paper" and c == "paper":
-    print("It's a tie!")
-elif u == "paper" and c == "scissors":
-    print("The user wins")
-
-elif u == "scissors" and c == "rock":
-    print("The computer wins")
-elif u == "scissors" and c == "paper":
-    print("The user wins")
-elif u == "scissors" and c == "scissors":
-    print("It's a tie!")
+# code attributed to shared solution from Kevin Pinkerton, Wednesday, Feb 2 in Slack
+wins = [("rock", "scissors"), ("scissors", "paper"), ("paper", "rock")]
+if (u, c) in wins:
+    print("You win!")
+elif u == c:
+    print("You tied.")
+else:
+    print("You lose.") 
