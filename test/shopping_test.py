@@ -1,5 +1,3 @@
-
-
 from app.shopping import format_usd
 # TODO: import some code
 
