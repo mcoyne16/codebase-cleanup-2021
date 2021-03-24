@@ -1,34 +1,40 @@
 
 from random import choice
 
-#
-# USER SELECTION
-#
+def determine_winner(p1, p2):
+    
 
-Valid_Options = ["rock", "paper", "scissors"]
 
-u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
-print("USER CHOICE:", u)
-if u not in Valid_Options:
-    print("OOPS, TRY AGAIN")
-    exit()
 
-#
-# COMPUTER SELECTION
-#
+if __name__ == '__main__':
+    #
+    # USER SELECTION
+    #
 
-c = choice(Valid_Options)
-print("COMPUTER CHOICE:", c)
+    Valid_Options = ["rock", "paper", "scissors"]
 
-#
-# DETERMINATION OF WINNER
-#
+    u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
+    print("USER CHOICE:", u)
+    if u not in Valid_Options:
+        print("OOPS, TRY AGAIN")
+        exit()
 
-# code attributed to shared solution from Kevin Pinkerton, Wednesday, Feb 2 in Slack
-wins = [("rock", "scissors"), ("scissors", "paper"), ("paper", "rock")]
-if (u, c) in wins:
-    print("You win!")
-elif u == c:
-    print("You tied.")
-else:
-    print("You lose.") 
+    #
+    # COMPUTER SELECTION
+    #
+
+    c = choice(Valid_Options)
+    print("COMPUTER CHOICE:", c)
+
+    #
+    # DETERMINATION OF WINNER
+    #
+
+    # code attributed to shared solution from Kevin Pinkerton, Wednesday, Feb 2 in Slack
+    wins = [("rock", "scissors"), ("scissors", "paper"), ("paper", "rock")]
+    if (u, c) in wins:
+        print("You win!")
+    elif u == c:
+        print("You tied.")
+    else:
+        print("You lose.") 
