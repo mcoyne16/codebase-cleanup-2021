@@ -2,7 +2,7 @@
 from random import choice
 
 def determine_winner(p1, p2):
-    
+    pass    
 
 
 
