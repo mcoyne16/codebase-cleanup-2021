@@ -1,9 +1,32 @@
 
 from random import choice
 
-def determine_winner(p1, p2):
-    pass    
+valid_options = ["rock", "paper", "scissors"]
 
+def determine_winner(choice1, choice2):
+    """
+    Params:
+        choice1 and choice2 are both strings: one of "rock", "paper", or "scissors"
+    """
+    winners = {
+        "rock":{
+            "rock": None, # represents a tie
+            "paper": "paper",
+            "scissors": "rock",
+        },
+        "paper":{
+            "rock": "paper",
+            "paper": None, # represents a tie
+            "scissors": "scissors",
+        },
+        "scissors":{
+            "rock": "rock",
+            "paper": "scissors",
+            "scissors": None, # represents a tie
+        },
+    }
+    winning_choice = winners[choice1][choice2]
+    return winning_choice
 
 
 if __name__ == '__main__':
@@ -29,12 +52,10 @@ if __name__ == '__main__':
     #
     # DETERMINATION OF WINNER
     #
-
-    # code attributed to shared solution from Kevin Pinkerton, Wednesday, Feb 2 in Slack
-    wins = [("rock", "scissors"), ("scissors", "paper"), ("paper", "rock")]
-    if (u, c) in wins:
-        print("You win!")
-    elif u == c:
-        print("You tied.")
-    else:
-        print("You lose.") 
+    winner = determine_winner(u, c)
+    if winner == u:
+        print("YOU WON!")
+    elif winner == c:
+        print("COMPUTER WON!")
+    elif winner == None:
+        print("TIE")
