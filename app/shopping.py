@@ -10,6 +10,17 @@ def format_usd(my_price):
     """
     return f"${my_price:,.2f}"
 
+def lookup_product(product_id, all_products):
+    """
+    Params :
+        product_id (str)
+        all_products (list of dict) each dict has "id", "name", "department", "aisle", and "price
+    """
+    matching_products = [p for p in all_products if str(p["id"]) == str(product_id)]
+    if any(matching_products):
+        return matching_products[0]
+    else:
+        return None
 
 #Prevent all the app code from being imported
 if __name__ == "__main__":
@@ -28,10 +39,10 @@ if __name__ == "__main__":
         if selected_id.upper() == "DONE":
             break
         else:
-            matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-            if any(matching_products):
-                selected_products.append(matching_products[0])
-            else:
+            matching_product = lookup_product(selected_id, products)
+            if matching_product:
+                selected_products.append(matching_product)
+            else:  
                 print("OOPS, Couldn't find that product. Please try again.")
     
     checkout_at = datetime.now()
@@ -40,45 +51,29 @@ if __name__ == "__main__":
     
     # PRINT RECEIPT
     
+    tax_rate = 0.0875
+
     print("---------")
     print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
     print("---------")
+    
+    receipt = ""
     for p in selected_products:
-        print("SELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
-    
-    print("---------")
-    print(f"SUBTOTAL: {format_usd(subtotal)}")
-    print(f"TAX: {format_usd(subtotal * 0.0875)}")
-    print(f"TOTAL: {format_usd(subtotal * 0.0875 + subtotal)}")
-    print("---------")
-    print("THANK YOU! PLEASE COME AGAIN SOON!")
-    print("---------")
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        receipt += "SELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]) + "\n"
+    receipt += "---------\n"
+    receipt += f"SUBTOTAL: {format_usd(subtotal)}\n"
+    receipt += f"TAX: {format_usd(subtotal * tax_rate)}\n"
+    receipt += f"TOTAL: {format_usd(subtotal * tax_rate + subtotal)}\n"
+    receipt += "---------\n"
+    receipt += "THANK YOU! PLEASE COME AGAIN SOON!\n"
+    receipt += "---------\n"
+
+    print(receipt)
     # WRITE RECEIPT TO FILE
     
     receipt_id = checkout_at.strftime('%Y-%M-%d-%H-%m-%S')
     receipt_filepath = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{receipt_id}.txt")
     
     with open(receipt_filepath, "w") as receipt_file:
-        receipt_file.write("------------------------------------------")
-        for p in selected_products:
-            receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + '${:.0f}'.format(p["price"]))
-    
-        receipt_file.write("\n---------")
-        receipt_file.write(f"\nSUBTOTAL: {subtotal}")
-        receipt_file.write(f"\nTAX: {subtotal * 0.875}")
-        receipt_file.write(f"\nTOTAL: {((subtotal * 0.875) + subtotal)}")
-        receipt_file.write("\n---------")
-        receipt_file.write("\nTHANK YOU! PLEASE COME AGAIN SOON!")
-        receipt_file.write("\n---------")
-    
+        receipt_file.write("------------------------------------------\n")
+        receipt_file.write(receipt)
