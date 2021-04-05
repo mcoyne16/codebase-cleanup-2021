@@ -1,34 +1,61 @@
 
 from random import choice
 
-#
-# USER SELECTION
-#
+valid_options = ["rock", "paper", "scissors"]
 
-Valid_Options = ["rock", "paper", "scissors"]
+def determine_winner(choice1, choice2):
+    """
+    Params:
+        choice1 and choice2 are both strings: one of "rock", "paper", or "scissors"
+    """
+    winners = {
+        "rock":{
+            "rock": None, # represents a tie
+            "paper": "paper",
+            "scissors": "rock",
+        },
+        "paper":{
+            "rock": "paper",
+            "paper": None, # represents a tie
+            "scissors": "scissors",
+        },
+        "scissors":{
+            "rock": "rock",
+            "paper": "scissors",
+            "scissors": None, # represents a tie
+        },
+    }
+    winning_choice = winners[choice1][choice2]
+    return winning_choice
 
-u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
-print("USER CHOICE:", u)
-if u not in Valid_Options:
-    print("OOPS, TRY AGAIN")
-    exit()
 
-#
-# COMPUTER SELECTION
-#
+if __name__ == '__main__':
+    #
+    # USER SELECTION
+    #
 
-c = choice(Valid_Options)
-print("COMPUTER CHOICE:", c)
+    Valid_Options = ["rock", "paper", "scissors"]
 
-#
-# DETERMINATION OF WINNER
-#
+    u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
+    print("USER CHOICE:", u)
+    if u not in Valid_Options:
+        print("OOPS, TRY AGAIN")
+        exit()
 
-# code attributed to shared solution from Kevin Pinkerton, Wednesday, Feb 2 in Slack
-wins = [("rock", "scissors"), ("scissors", "paper"), ("paper", "rock")]
-if (u, c) in wins:
-    print("You win!")
-elif u == c:
-    print("You tied.")
-else:
-    print("You lose.") 
+    #
+    # COMPUTER SELECTION
+    #
+
+    c = choice(Valid_Options)
+    print("COMPUTER CHOICE:", c)
+
+    #
+    # DETERMINATION OF WINNER
+    #
+    winner = determine_winner(u, c)
+    if winner == u:
+        print("YOU WON!")
+    elif winner == c:
+        print("COMPUTER WON!")
+    elif winner == None:
+        print("TIE")
